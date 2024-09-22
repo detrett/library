@@ -2,22 +2,62 @@ const myLibrary = [];
 const newBookBtn = document.getElementById('new-book-btn');
 const cards = document.getElementById('cards');
 
+const deleteModal = document.getElementById('deleteModal');
+const closeBtn = document.getElementById("close");
+const confirmDeleteBtn = document.getElementById('confirmDelete');
+
+let bookToDelete = null;
+
+confirmDeleteBtn.addEventListener('click', (event) => {
+    if (bookToDelete) {
+        removeBookFromLibrary(bookToDelete); 
+        bookToDelete = null; 
+        deleteModal.style.display = "none"; 
+    }
+})
+
+closeBtn.addEventListener('click', (event) => {
+    bookToDelete = null;
+    deleteModal.style.display = "none"; 
+})
+
+
+window.addEventListener('click', (event) => {
+    if (event.target == deleteModal) {
+        bookToDelete = null; 
+        deleteModal.style.display = "none"; 
+    }
+})
+
 function Book(title, author, pages, isRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.isRead = isRead;
+    this.index = 0;
 }
 
-Book.prototype.info = function() {
-    if(this.isRead) return `${this.title} by ${this.author}, ${this.pages} pages, read.`;
-    else return `${this.title} by ${this.author}, ${this.pages} pages, not read yet.`; 
+Book.prototype.info = function () {
+    if (this.isRead) return `${this.title} by ${this.author}, ${this.pages} pages, read.`;
+    else return `${this.title} by ${this.author}, ${this.pages} pages, not read yet.`;
 }
 
 function addBookToLibrary(book) {
-    myLibrary.push(book);
+    let index = myLibrary.push(book) - 1;
+    console.log(`Book title: ${book.title}. Given index: ${index}`);
+    book.index = index;
     displayBooks();
 }
+
+function removeBookFromLibrary(bookToRemove) {
+    myLibrary.splice(bookToRemove.index, 1);
+    myLibrary.forEach((book, newIndex) => {
+        book.index = newIndex;
+        console.log(`Book title: ${book.title}. New index: ${book.index}`);
+    });
+    displayBooks();
+}
+
 
 //Delete all children of the list, then add all books in the array.
 function displayBooks() {
@@ -32,6 +72,7 @@ function displayBooks() {
         const author = document.createElement('p');
         const pages = document.createElement('p');
         const isRead = document.createElement('p');
+        const trashIcon = document.createElement('img');
 
         cardDiv.classList.add('card');
 
@@ -47,10 +88,18 @@ function displayBooks() {
         isRead.classList.add('card-read');
         isRead.textContent = `Read: ${book.isRead ? '✔️' : '❌'}`;
 
+        trashIcon.classList.add('trash-icon');
+        trashIcon.src = "icons/trash.svg"
+        trashIcon.addEventListener('click', (event) => {
+            bookToDelete = book;
+            deleteModal.style.display = "block";
+        })
+
         cardDiv.appendChild(title);
         cardDiv.appendChild(author);
         cardDiv.appendChild(pages);
         cardDiv.appendChild(isRead);
+        cardDiv.appendChild(trashIcon);
 
         card.appendChild(cardDiv);
 
@@ -65,6 +114,7 @@ const book3 = new Book('Divergent', 'Veronica Roth', 380, false);
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
+
 
 
 
