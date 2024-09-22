@@ -1,12 +1,18 @@
 const myLibrary = [];
-const newBookBtn = document.getElementById('new-book-btn');
 const cards = document.getElementById('cards');
+
+const newBookBtn = document.getElementById('new-book-btn');
+const newBookModal = document.getElementById('addModal');
 
 const deleteModal = document.getElementById('deleteModal');
 const closeBtn = document.getElementById("close");
 const confirmDeleteBtn = document.getElementById('confirmDelete');
 
 let bookToDelete = null;
+
+newBookBtn.addEventListener('click', (event) => {
+    newBookModal.style.display = "block";
+})
 
 confirmDeleteBtn.addEventListener('click', (event) => {
     if (bookToDelete) {
@@ -26,6 +32,9 @@ window.addEventListener('click', (event) => {
     if (event.target == deleteModal) {
         bookToDelete = null; 
         deleteModal.style.display = "none"; 
+    }
+    if (event.target == newBookModal) {
+        newBookModal.style.display = "none";
     }
 })
 
