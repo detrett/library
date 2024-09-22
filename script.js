@@ -26,6 +26,11 @@ Book.prototype.info = function () {
     else return `${this.title} by ${this.author}, ${this.pages} pages, not read yet.`;
 }
 
+Book.prototype.toggleRead = function() {
+    this.isRead = !this.isRead;
+    return this.isRead;
+}
+
 function addBookToLibrary(book) {
     let index = myLibrary.push(book) - 1;
     console.log(`Book title: ${book.title}. Given index: ${index}`);
@@ -56,6 +61,8 @@ function displayBooks() {
         const author = document.createElement('p');
         const pages = document.createElement('p');
         const isRead = document.createElement('p');
+        const iconsDiv = document.createElement('div');
+        const readIcon = document.createElement('img');
         const trashIcon = document.createElement('img');
 
         cardDiv.classList.add('card');
@@ -72,6 +79,16 @@ function displayBooks() {
         isRead.classList.add('card-read');
         isRead.textContent = `Read: ${book.isRead ? '✔️' : '❌'}`;
 
+        iconsDiv.classList.add('icons');
+
+        readIcon.classList.add('icon');
+        readIcon.src = book.isRead ? 'icons/unread.svg' : 'icons/read.svg';
+        readIcon.addEventListener('click', (event) => {
+            const newIsRead = book.toggleRead();
+            isRead.textContent = `Read: ${newIsRead ? '✔️' : '❌'}`;
+            readIcon.src = newIsRead ? 'icons/unread.svg' : 'icons/read.svg';
+        })
+
         trashIcon.classList.add('trash-icon');
         trashIcon.src = "icons/trash.svg"
         trashIcon.addEventListener('click', (event) => {
@@ -83,7 +100,11 @@ function displayBooks() {
         cardDiv.appendChild(author);
         cardDiv.appendChild(pages);
         cardDiv.appendChild(isRead);
-        cardDiv.appendChild(trashIcon);
+
+        iconsDiv.appendChild(readIcon);
+        iconsDiv.appendChild(trashIcon);
+
+        cardDiv.appendChild(iconsDiv);
 
         card.appendChild(cardDiv);
 

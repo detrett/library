@@ -43,6 +43,15 @@ body {
     background-color: #f8f9fb;
 }
 
+a{
+    text-decoration: none;
+}
+
+#container {
+    padding-top: 24px;
+    padding-bottom: 48px;
+}
+
 .button {
     width: 100%;
     margin: auto;
@@ -50,16 +59,43 @@ body {
 
 #cards-container {
     margin: auto;
-    padding-block-start: 24px;
     width: 80%;
 
     & div#button-container {
         width: 100%;
         padding: 36px 48px 64px 8px;
         display: flex;
+        justify-content: space-around;
 
-        & button {
-            margin: auto;
+        & button {  
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #f3efe3;
+            border: 1px solid #0B6E4F;
+            background-color: #073B3A;
+            padding: 12px 48px;
+
+            &:hover {
+                cursor: pointer;
+                border: 1px solid #0B6E4F;
+                background-color: #0B6E4F;
+            }
+            &#github {
+                background-color: #91818A;
+                border:#888;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                & img {
+                    width: 24px;
+                    margin-inline-end: 8px;
+                    vertical-align: middle;
+                }
+                &:hover{
+                    background-color: #696767;
+                }
+            }
         }
     }
 }
@@ -68,6 +104,7 @@ ul#cards {
     display: grid;
     overflow: auto;
     gap: 80px;
+    padding: 8px;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 }
 
@@ -80,6 +117,7 @@ ul#cards {
     width: 400px;
     padding: 40px 40px 60px 40px;
     background-color: #f3efe3;
+    box-shadow: 7px 7px 9px -6px rgba(0,0,0,0.75);
 
     & .card-title {
         text-align: center;
@@ -95,11 +133,14 @@ ul#cards {
         border-bottom: 1px solid black;
     }
 
-    & .trash-icon {
-        width: 36px;
+    & .icons {
         justify-self: flex-end;
         align-self: flex-end;
+    }
 
+    & .icon, .trash-icon {
+        width: 36px;
+        margin-inline-start: 8px;
         &:hover {
             cursor: pointer;
         }
@@ -133,21 +174,33 @@ ul#cards {
     /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
     /* Black w/ opacity */
+    animation: fadein .5s;
+}
+
+@keyframes fadein {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
 }
 
 #x-btn:hover,
 #x-btn:focus {
-    color: black;
+    color: #073B3A;
     text-decoration: none;
     cursor: pointer;
 }
 
 /* Modal Content/Box */
 .add-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 10px;
-    border: 1px solid #888;
+    background-color: #0B6E4F;
+    color: hsl(45, 40%, 92%);
+    margin: 10% auto;
+    padding: 8px 8px 48px 8px;
+    border: 1px solid #073B3A;
+    border-radius: 8px;
     min-height: 180px;
     width: 400px;
 
@@ -160,50 +213,97 @@ ul#cards {
         min-height: 250px;
 
         & input {
+            padding: 8px 12px;
+            font-size: 20px;
             width: 80%;
+            margin-block-end: 12px;
         }
 
         & #x-btn {
             padding: 8px;
-            font-size: 24px;
+            font-size: 32px;
             align-self: flex-end;
         }
 
         & h3 {
-            font-size: 24px;
+            font-size: 32px;
+            font-weight: 600;
+            margin-block-end: 24px;
+        }
+        
+        & button {
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: 600;
+            color: black;
+            border: 1px solid #91818A;
+            background-color: hsl(45, 40%, 92%);;
+            padding: 12px 48px;
+            &:hover {
+                cursor: pointer;
+                border: 1px solid #0B6E4F;
+                color:#f8f9fb;
+                background-color: #073B3A;
+            }
         }
     }
 }
 
 .checkbox-container {
-    display: flex;
-    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-block-end: 16px;
     
     & label {
-        text-align: center;
-        width: 200px;
+        font-size: 24px;
+        + input {
+            justify-self: flex-end;
+            margin-block-end: 0px;
+            accent-color: #91818A;
+        }
     }
+
 }
 
 .delete-modal-content {
     display: grid;
     grid-template: 2fr 1fr / 1fr 1fr;
-    gap: 2rem;
+    gap: 1rem;
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
+    padding: 40px;
     border: 1px solid #888;
+    border-radius: 8px;
     min-height: 150px;
     width: 400px;
 
     & p {
+        font-size: 20px;
+        line-height: 1.25;
         grid-area: 1 / 1 / 2 / 3;
     }
 
     & button {
         width: 120px;
+        padding: 8px 0px;
+        font-size: 16px;
+        font-weight: 600;
         justify-self: center;
+        border: none;
+        border-radius: 4px;
+        &:hover {
+            cursor: pointer;
+            background-color: #c4c2c2;
+        }
     }
 
+}
+
+#confirmDelete {
+    background-color:#073B3A;
+    color:#f8f9fb;
+    &:hover{
+        background-color: #0B6E4F;
+    }
 }
 
