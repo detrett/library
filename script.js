@@ -1,42 +1,17 @@
 const myLibrary = [];
 const cards = document.getElementById('cards');
 
+const newBookForm = document.getElementById('new-book-form');
 const newBookBtn = document.getElementById('new-book-btn');
 const newBookModal = document.getElementById('addModal');
+const submitBtn = document.getElementById('submit-btn');
+const xBtn = document.getElementById('x-btn');
 
 const deleteModal = document.getElementById('deleteModal');
 const closeBtn = document.getElementById("close");
 const confirmDeleteBtn = document.getElementById('confirmDelete');
 
 let bookToDelete = null;
-
-newBookBtn.addEventListener('click', (event) => {
-    newBookModal.style.display = "block";
-})
-
-confirmDeleteBtn.addEventListener('click', (event) => {
-    if (bookToDelete) {
-        removeBookFromLibrary(bookToDelete); 
-        bookToDelete = null; 
-        deleteModal.style.display = "none"; 
-    }
-})
-
-closeBtn.addEventListener('click', (event) => {
-    bookToDelete = null;
-    deleteModal.style.display = "none"; 
-})
-
-
-window.addEventListener('click', (event) => {
-    if (event.target == deleteModal) {
-        bookToDelete = null; 
-        deleteModal.style.display = "none"; 
-    }
-    if (event.target == newBookModal) {
-        newBookModal.style.display = "none";
-    }
-})
 
 function Book(title, author, pages, isRead) {
     this.title = title;
@@ -115,6 +90,56 @@ function displayBooks() {
         cards.appendChild(card);
     });
 }
+
+newBookBtn.addEventListener('click', (event) => {
+    newBookModal.style.display = "block";
+})
+
+confirmDeleteBtn.addEventListener('click', (event) => {
+    if (bookToDelete) {
+        removeBookFromLibrary(bookToDelete); 
+        bookToDelete = null; 
+        deleteModal.style.display = "none"; 
+    }
+})
+
+xBtn.addEventListener('click', () => {
+    newBookModal.style.display = "none";
+})
+
+closeBtn.addEventListener('click', (event) => {
+    bookToDelete = null;
+    deleteModal.style.display = "none"; 
+})
+
+newBookForm.addEventListener('submit', (event) => {
+
+    if (!newBookForm.checkValidity()) {
+        return; // If the form is invalid, let the browser handle the validation messages
+    }
+    event.preventDefault();
+
+    const title = newBookForm.querySelector('input[id="form-title"]').value;
+    const author = newBookForm.querySelector('input[id="form-author"]').value;
+    const pages = newBookForm.querySelector('input[id="form-pages"]').value;
+    const isRead = newBookForm.querySelector('input[id="is-read"]').checked;
+
+    const newBook = new Book(title, author, pages, isRead);
+
+    addBookToLibrary(newBook);
+    newBookForm.reset();
+    newBookModal.style.display = "none";
+})
+
+window.addEventListener('click', (event) => {
+    if (event.target == deleteModal) {
+        bookToDelete = null; 
+        deleteModal.style.display = "none"; 
+    }
+    if (event.target == newBookModal) {
+        newBookModal.style.display = "none";
+    }
+})
 
 const book1 = new Book('The Demolished Man', 'Alfred Bester', 250, true);
 const book2 = new Book('Ubik', 'Philip K. Dick', 288, true);

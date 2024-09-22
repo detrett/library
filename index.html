@@ -30,16 +30,17 @@
 
     <div id="addModal" class="modal-1">
         <div class="add-modal-content">
-            <form action="">
+            <form id="new-book-form" action="">
+                <span id="x-btn">&times;</span>
                 <h3>Add a new book</h3>
-                <input class="input" type="text" placeholder="Title" required maxlength="100">
-                <input class="input" type="text" placeholder="Author" required maxlength="100">
-                <input class="input" type="number" placeholder="Pages" required max="10000">
+                <input class="input" id="form-title" type="text" placeholder="Title" required maxlength="100">
+                <input class="input" id="form-author" type="text" placeholder="Author" required maxlength="100">
+                <input class="input" id="form-pages" type="number" placeholder="Pages" required max="10000">
                 <div class="checkbox-container">
                     <label for="is-read">Mark as read?</label>
                     <input class="checkbox" type="checkbox" id="is-read">
                 </div>
-                <button type="submit">Add book</button>
+                <button id="submit-btn" type="submit">Add book</button>
             </form>
         </div>
     </div>
