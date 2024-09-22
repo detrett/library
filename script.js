@@ -1,4 +1,6 @@
 const myLibrary = [];
+const newBookBtn = document.getElementById('new-book-btn');
+const cards = document.getElementById('cards');
 
 function Book(title, author, pages, isRead) {
     this.title = title;
@@ -14,10 +16,46 @@ Book.prototype.info = function() {
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
+    displayBooks();
 }
 
+//Delete all children of the list, then add all books in the array.
 function displayBooks() {
-    myLibrary.forEach((item) => console.log(item.info()));
+    while (cards.firstChild) {
+        cards.removeChild(cards.firstChild);
+    }
+
+    myLibrary.forEach((book) => {
+        const card = document.createElement('li');
+        const cardDiv = document.createElement('div');
+        const title = document.createElement('h3');
+        const author = document.createElement('p');
+        const pages = document.createElement('p');
+        const isRead = document.createElement('p');
+
+        cardDiv.classList.add('card');
+
+        title.classList.add('card-title');
+        title.textContent = book.title;
+
+        author.classList.add('card-author');
+        author.textContent = `Author: ${book.author}`;
+
+        pages.classList.add('card-pages');
+        pages.textContent = `Pages: ${book.pages}`;
+
+        isRead.classList.add('card-read');
+        isRead.textContent = `Read: ${book.isRead ? '✔️' : '❌'}`;
+
+        cardDiv.appendChild(title);
+        cardDiv.appendChild(author);
+        cardDiv.appendChild(pages);
+        cardDiv.appendChild(isRead);
+
+        card.appendChild(cardDiv);
+
+        cards.appendChild(card);
+    });
 }
 
 const book1 = new Book('The Demolished Man', 'Alfred Bester', 250, true);
@@ -28,4 +66,6 @@ addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
 
-displayBooks();
+
+
+
