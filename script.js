@@ -13,23 +13,32 @@ const confirmDeleteBtn = document.getElementById('confirmDelete');
 
 let bookToDelete = null;
 
-function Book(title, author, pages, isRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-    this.index = 0;
+class Book {
+    constructor(title, author, pages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead;
+        this.index = 0;
+    }
 }
 
-Book.prototype.info = function () {
-    if (this.isRead) return `${this.title} by ${this.author}, ${this.pages} pages, read.`;
-    else return `${this.title} by ${this.author}, ${this.pages} pages, not read yet.`;
+const info = {
+    info() {
+        if (this.isRead) return `${this.title} by ${this.author}, ${this.pages} pages, read.`;
+        else return `${this.title} by ${this.author}, ${this.pages} pages, not read yet.`;
+    }
 }
 
-Book.prototype.toggleRead = function() {
-    this.isRead = !this.isRead;
-    return this.isRead;
+const toggleRead = {
+    toggleRead() {
+        this.isRead = !this.isRead;
+        return this.isRead;
+    }
 }
+
+Object.assign(Book.prototype, info);
+Object.assign(Book.prototype, toggleRead);
 
 function addBookToLibrary(book) {
     let index = myLibrary.push(book) - 1;
@@ -118,9 +127,9 @@ newBookBtn.addEventListener('click', (event) => {
 
 confirmDeleteBtn.addEventListener('click', (event) => {
     if (bookToDelete) {
-        removeBookFromLibrary(bookToDelete); 
-        bookToDelete = null; 
-        deleteModal.style.display = "none"; 
+        removeBookFromLibrary(bookToDelete);
+        bookToDelete = null;
+        deleteModal.style.display = "none";
     }
 })
 
@@ -130,7 +139,7 @@ xBtn.addEventListener('click', () => {
 
 closeBtn.addEventListener('click', (event) => {
     bookToDelete = null;
-    deleteModal.style.display = "none"; 
+    deleteModal.style.display = "none";
 })
 
 newBookForm.addEventListener('submit', (event) => {
@@ -154,8 +163,8 @@ newBookForm.addEventListener('submit', (event) => {
 
 window.addEventListener('click', (event) => {
     if (event.target == deleteModal) {
-        bookToDelete = null; 
-        deleteModal.style.display = "none"; 
+        bookToDelete = null;
+        deleteModal.style.display = "none";
     }
     if (event.target == newBookModal) {
         newBookModal.style.display = "none";
