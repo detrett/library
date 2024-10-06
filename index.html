@@ -33,14 +33,17 @@
 
     <div id="addModal" class="modal-1">
         <div class="add-modal-content">
-            <form id="new-book-form" action="">
+            <form id="new-book-form" action="" novalidate>
                 <span id="x-btn">&times;</span>
                 <h3>Add a new book</h3>
                 <input class="input" id="form-title" type="text" placeholder="Title" required minlength="3"
                     maxlength="100">
+                    <span class="error" aria-live="assertive"></span>
                 <input class="input" id="form-author" type="text" placeholder="Author" required minlength="3"
                     maxlength="100">
+                    <span class="error"></span>
                 <input class="input" id="form-pages" type="number" placeholder="Pages" required max="10000">
+                <span class="error">    </span>
                 <div class="checkbox-container">
                     <label for="is-read">Mark as read?</label>
                     <input class="checkbox" type="checkbox" id="is-read">
